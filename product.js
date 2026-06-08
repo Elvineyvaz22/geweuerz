@@ -20,7 +20,7 @@ function productCard(product) {
   const article = document.createElement('article');
   article.className = 'shop-card';
   article.innerHTML = `
-    <a class="shop-card-link" href="products/${slug}.html" aria-label="${product.name}">
+    <a class="shop-card-link" href="/products/${slug}.html" aria-label="${product.name}">
       <div class="shop-card-media">
         <span>${product.category}</span>
       </div>
@@ -73,7 +73,7 @@ function renderProduct(product, products) {
 
 async function initProductPage() {
   try {
-    const response = await fetch('products.json');
+    const response = await fetch('/products.json');
     const products = await response.json();
     const slug = window.PRODUCT_SLUG || new URLSearchParams(window.location.search).get('slug');
     const product = products.find(item => productSlug(item.name) === slug);

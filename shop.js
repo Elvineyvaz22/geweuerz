@@ -20,7 +20,7 @@ function productSlug(value) {
 }
 
 function productPageUrl(product) {
-  return `products/${productSlug(product.name)}.html`;
+  return `/products/${productSlug(product.name)}.html`;
 }
 
 function createCategoryButton(category) {
