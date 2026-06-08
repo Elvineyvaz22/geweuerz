@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>5 Chinesische Gewurze | Gewurz Kreationen Bonn</title>
+  <meta name="description" content="Traditionelle chinesische Gewurzmischung mit sussen, wurzigen und aromatischen Noten fur authentische asiatische Gerichte." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../index.html" class="logo">Gewurz<span>Kreationen</span></a>
+      <div class="nav-links">
+        <a href="../index.html#about" data-tr="Hakkimizda" data-de="Uber uns">Hakkimizda</a>
+        <a href="../shop.html" data-tr="Magaza" data-de="Shop">Magaza</a>
+        <a href="../index.html#quality" data-tr="Kalite" data-de="Qualitat">Kalite</a>
+        <a href="../index.html#contact" data-tr="Iletisim" data-de="Kontakt">Iletisim</a>
+      </div>
+      <div class="language-switcher" aria-label="Language switcher">
+        <button class="lang-btn active" data-lang="tr">TR</button>
+        <button class="lang-btn" data-lang="de">DE</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="product-detail" id="productDetail"></section>
+
+    <section class="section product-related-section">
+      <div class="section-heading">
+        <p class="eyebrow">Benzer urunler</p>
+        <h2>Bu kateqoriyadan diger secimler</h2>
+      </div>
+      <div class="shop-grid" id="relatedProducts"></div>
+    </section>
+  </main>
+
+  <div class="ai-chat" id="aiChat">
+    <button class="ai-chat-toggle" id="aiChatToggle" type="button" aria-label="Open chat">
+      <span class="ai-chat-toggle-icon">?</span>
+      <span class="ai-chat-toggle-text">Chat</span>
+    </button>
+
+    <section class="ai-chat-window" id="aiChatWindow" aria-label="AI customer chat">
+      <div class="ai-chat-header">
+        <div>
+          <strong data-tr="Gewurz Asistani" data-de="Gewurz Assistent">Gewurz Asistani</strong>
+          <span data-tr="Baharatlar haqqinda sorusun" data-de="Fragen Sie nach Gewurzen">Baharatlar haqqinda sorusun</span>
+        </div>
+        <button class="ai-chat-close" id="aiChatClose" type="button" aria-label="Close chat">x</button>
+      </div>
+
+      <div class="ai-chat-messages" id="aiChatMessages" aria-live="polite">
+        <div class="ai-chat-message bot" data-tr="Salam! Hansi yemek veya baharat haqqinda melumat almaq isteyirsiniz?" data-de="Hallo! Zu welchem Gericht oder Gewurz mochten Sie Informationen?">Salam! Hansi yemek veya baharat haqqinda melumat almaq isteyirsiniz?</div>
+      </div>
+
+      <form class="ai-chat-form" id="aiChatForm">
+        <textarea id="aiChatInput" rows="1" autocomplete="off" data-placeholder-tr="Mesajinizi yazin..." data-placeholder-de="Nachricht schreiben..." placeholder="Mesajinizi yazin..."></textarea>
+        <button type="submit" data-tr="Gonder" data-de="Senden">Gonder</button>
+      </form>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Gewurz Kreationen Bonn</p>
+    <p data-tr="Dogal lezzetler, ozel baharatlar." data-de="Naturliche Aromen, besondere Gewurze.">Dogal lezzetler, ozel baharatlar.</p>
+  </footer>
+
+  <script>window.PRODUCT_SLUG = "5-chinesische-gewurze";</script>
+  <script src="../script.js"></script>
+  <script src="../product.js"></script>
+</body>
+</html>

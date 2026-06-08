@@ -18,7 +18,7 @@ async function getProductCatalog() {
   const products = JSON.parse(file);
   cachedCatalog = products
     .map((product) => {
-      const link = `https://geweuerz.vercel.app/product.html?slug=${productSlug(product.name)}`;
+      const link = `https://geweuerz.vercel.app/products/${productSlug(product.name)}.html`;
       return `- ${product.name} | ${product.category} | ${product.weight} | ${product.price} | ${link} | ${product.description}`;
     })
     .join('\n');

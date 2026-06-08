@@ -19,6 +19,10 @@ function productSlug(value) {
     .replace(/^-+|-+$/g, '');
 }
 
+function productPageUrl(product) {
+  return `products/${productSlug(product.name)}.html`;
+}
+
 function createCategoryButton(category) {
   const button = document.createElement('button');
   button.type = 'button';
@@ -56,11 +60,10 @@ function getFilteredProducts() {
 }
 
 function renderProduct(product) {
-  const slug = productSlug(product.name);
   const article = document.createElement('article');
   article.className = 'shop-card';
   article.innerHTML = `
-    <a class="shop-card-link" href="product.html?slug=${slug}" aria-label="${product.name}">
+    <a class="shop-card-link" href="${productPageUrl(product)}" aria-label="${product.name}">
       <div class="shop-card-media">
         <span>${product.category}</span>
       </div>
