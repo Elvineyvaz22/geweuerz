@@ -74,6 +74,11 @@ function setChatLoading(isLoading) {
   chatForm.querySelector('button').disabled = isLoading;
 }
 
+function resizeChatInput() {
+  chatInput.style.height = 'auto';
+  chatInput.style.height = `${Math.min(chatInput.scrollHeight, 118)}px`;
+}
+
 chatToggle?.addEventListener('click', () => {
   setChatOpen(!chat.classList.contains('open'));
 });
@@ -90,6 +95,8 @@ window.addEventListener('resize', () => {
   }
 });
 
+chatInput?.addEventListener('input', resizeChatInput);
+
 chatForm?.addEventListener('submit', async (event) => {
   event.preventDefault();
 
@@ -104,6 +111,7 @@ chatForm?.addEventListener('submit', async (event) => {
 
   addChatMessage(message, 'user');
   chatInput.value = '';
+  resizeChatInput();
   setChatLoading(true);
   const loadingMessage = addChatMessage(loadingText, 'bot');
 
