@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Shop | Gewurz Kreationen Bonn</title>
+  <meta name="description" content="Gewurz Kreationen Bonn urunleri, baharat karisimlari ve tuz cesitleri." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="index.html" class="logo">Gewurz<span>Kreationen</span></a>
+      <div class="nav-links">
+        <a href="index.html#about" data-tr="Hakkimizda" data-de="Uber uns">Hakkimizda</a>
+        <a href="shop.html" data-tr="Magaza" data-de="Shop">Magaza</a>
+        <a href="index.html#quality" data-tr="Kalite" data-de="Qualitat">Kalite</a>
+        <a href="index.html#contact" data-tr="Iletisim" data-de="Kontakt">Iletisim</a>
+      </div>
+      <div class="language-switcher" aria-label="Language switcher">
+        <button class="lang-btn active" data-lang="tr">TR</button>
+        <button class="lang-btn" data-lang="de">DE</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="shop-hero">
+      <p class="eyebrow" data-tr="Magaza" data-de="Shop">Magaza</p>
+      <h1 data-tr="Baharatlar ve ozel karisimlar" data-de="Gewurze und besondere Mischungen">Baharatlar ve ozel karisimlar</h1>
+      <p data-tr="Urunleri kategoriye gore filtreleyin, arayin ve siparis ucun bizimle elaqe saxlayin." data-de="Filtern Sie die Produkte nach Kategorie, suchen Sie gezielt und kontaktieren Sie uns fur Bestellungen.">Urunleri kategoriye gore filtreleyin, arayin ve siparis ucun bizimle elaqe saxlayin.</p>
+    </section>
+
+    <section class="shop-shell">
+      <aside class="shop-filters">
+        <div>
+          <label for="shopSearch" data-tr="Axtaris" data-de="Suche">Axtaris</label>
+          <input id="shopSearch" type="search" placeholder="Urun axtar..." data-placeholder-tr="Urun axtar..." data-placeholder-de="Produkt suchen..." />
+        </div>
+        <div>
+          <span data-tr="Kateqoriya" data-de="Kategorie">Kateqoriya</span>
+          <div class="shop-category-list" id="shopCategories"></div>
+        </div>
+      </aside>
+
+      <section class="shop-results">
+        <div class="shop-results-head">
+          <strong id="shopCount">0 Produkte</strong>
+          <select id="shopSort" aria-label="Sort products">
+            <option value="default" data-tr="Standart" data-de="Standard">Standart</option>
+            <option value="name" data-tr="Ada gore" data-de="Nach Name">Ada gore</option>
+            <option value="category" data-tr="Kateqoriyaya gore" data-de="Nach Kategorie">Kateqoriyaya gore</option>
+          </select>
+        </div>
+        <div class="shop-grid" id="shopGrid"></div>
+      </section>
+    </section>
+  </main>
+
+  <div class="ai-chat" id="aiChat">
+    <button class="ai-chat-toggle" id="aiChatToggle" type="button" aria-label="Open chat">
+      <span class="ai-chat-toggle-icon">?</span>
+      <span class="ai-chat-toggle-text">Chat</span>
+    </button>
+
+    <section class="ai-chat-window" id="aiChatWindow" aria-label="AI customer chat">
+      <div class="ai-chat-header">
+        <div>
+          <strong data-tr="Gewurz Asistani" data-de="Gewurz Assistent">Gewurz Asistani</strong>
+          <span data-tr="Baharatlar haqqinda sorusun" data-de="Fragen Sie nach Gewurzen">Baharatlar haqqinda sorusun</span>
+        </div>
+        <button class="ai-chat-close" id="aiChatClose" type="button" aria-label="Close chat">x</button>
+      </div>
+
+      <div class="ai-chat-messages" id="aiChatMessages" aria-live="polite">
+        <div class="ai-chat-message bot" data-tr="Salam! Hansi yemek veya baharat haqqinda melumat almaq isteyirsiniz?" data-de="Hallo! Zu welchem Gericht oder Gewurz mochten Sie Informationen?">Salam! Hansi yemek veya baharat haqqinda melumat almaq isteyirsiniz?</div>
+      </div>
+
+      <form class="ai-chat-form" id="aiChatForm">
+        <textarea id="aiChatInput" rows="1" autocomplete="off" data-placeholder-tr="Mesajinizi yazin..." data-placeholder-de="Nachricht schreiben..." placeholder="Mesajinizi yazin..."></textarea>
+        <button type="submit" data-tr="Gonder" data-de="Senden">Gonder</button>
+      </form>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Gewurz Kreationen Bonn</p>
+    <p data-tr="Dogal lezzetler, ozel baharatlar." data-de="Naturliche Aromen, besondere Gewurze.">Dogal lezzetler, ozel baharatlar.</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="shop.js"></script>
+</body>
+</html>

@@ -1,3 +1,20 @@
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+
+let cachedCatalog = null;
+
+async function getProductCatalog() {
+  if (cachedCatalog) return cachedCatalog;
+
+  const file = await readFile(join(process.cwd(), 'products.json'), 'utf8');
+  const products = JSON.parse(file);
+  cachedCatalog = products
+    .map((product) => `- ${product.name} | ${product.category} | ${product.weight} | ${product.price} | ${product.description}`)
+    .join('\n');
+
+  return cachedCatalog;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -14,18 +31,20 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'OPENAI_API_KEY is not configured on Vercel.' });
     }
 
+    const productCatalog = await getProductCatalog();
     const systemPrompt = `
-You are the friendly AI assistant for Gewürz Kreationen Bonn, a spice and seasoning brand in Bonn, Germany.
-Answer customers in Turkish if they write Turkish, in German if they write German, otherwise answer in the detected language.
+You are the friendly AI sales assistant for Gewurz Kreationen Bonn, a spice and seasoning brand in Bonn, Germany.
+Answer customers in Turkish if they write Turkish, German if they write German, Azerbaijani if they write Azerbaijani, otherwise answer in the detected language.
 Keep answers short, warm, helpful, and sales-oriented.
-You can help with:
-- spice recommendations for meat, chicken, fish, vegetables, soups, salads and Turkish/German dishes
-- product guidance
-- gift set suggestions
-- general order/contact guidance
-If the customer wants to buy, order, ask about price, delivery, wholesale, partnership or exact stock, guide them to contact the business by email: info@gewuerzkreationen-bonn.de.
-Do not invent exact prices, stock levels, delivery dates, certificates, ingredients, or medical benefits.
+
+Use only the product catalog below for product recommendations, prices, weights and categories.
+Do not invent products, exact prices, stock levels, delivery dates, certificates, ingredients, or medical benefits.
+If the customer asks for a recommendation, suggest 2-4 relevant products and briefly explain why.
+If the customer wants to buy, order, ask about delivery, wholesale, partnership or exact stock, guide them to contact the business by email: info@gewuerzkreationen-bonn.de or visit the shop page: https://geweuerz.vercel.app/shop.html.
 If asked about health or allergies, advise checking ingredients and contacting the business directly.
+
+Product catalog:
+${productCatalog}
 `;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -38,10 +57,10 @@ If asked about health or allergies, advise checking ingredients and contacting t
         model: 'gpt-4o-mini',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: message }
+          { role: 'user', content: message },
         ],
-        temperature: 0.5,
-        max_tokens: 350,
+        temperature: 0.45,
+        max_tokens: 420,
       }),
     });
 
@@ -51,7 +70,7 @@ If asked about health or allergies, advise checking ingredients and contacting t
     }
 
     const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content || 'Üzgünüm, şu anda cevap veremedim.';
+    const reply = data.choices?.[0]?.message?.content || 'Uzgunum, su anda cevap veremedim.';
 
     return res.status(200).json({ reply });
   } catch (error) {
