@@ -3,13 +3,24 @@ import { join } from 'node:path';
 
 let cachedCatalog = null;
 
+function productSlug(value) {
+  return value
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 async function getProductCatalog() {
   if (cachedCatalog) return cachedCatalog;
 
   const file = await readFile(join(process.cwd(), 'products.json'), 'utf8');
   const products = JSON.parse(file);
   cachedCatalog = products
-    .map((product) => `- ${product.name} | ${product.category} | ${product.weight} | ${product.price} | ${product.description}`)
+    .map((product) => {
+      const link = `https://geweuerz.vercel.app/product.html?slug=${productSlug(product.name)}`;
+      return `- ${product.name} | ${product.category} | ${product.weight} | ${product.price} | ${link} | ${product.description}`;
+    })
     .join('\n');
 
   return cachedCatalog;
@@ -54,13 +65,12 @@ ${productCatalog}
         Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-mini',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: message },
         ],
-        temperature: 0.45,
-        max_tokens: 420,
+        max_completion_tokens: 420,
       }),
     });
 

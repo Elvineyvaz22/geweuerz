@@ -11,6 +11,14 @@ function normalizeText(value) {
   return value.toLowerCase().trim();
 }
 
+function productSlug(value) {
+  return value
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 function createCategoryButton(category) {
   const button = document.createElement('button');
   button.type = 'button';
@@ -47,31 +55,28 @@ function getFilteredProducts() {
   return result;
 }
 
-function productOrderLink(product) {
-  const subject = encodeURIComponent(`Order request: ${product.name}`);
-  const body = encodeURIComponent(`Hello,\n\nI would like to order or get more information about:\n${product.name} (${product.weight})\nPrice: ${product.price}\n\nThank you.`);
-  return `mailto:info@gewuerzkreationen-bonn.de?subject=${subject}&body=${body}`;
-}
-
 function renderProduct(product) {
+  const slug = productSlug(product.name);
   const article = document.createElement('article');
   article.className = 'shop-card';
   article.innerHTML = `
-    <div class="shop-card-media">
-      <span>${product.category}</span>
-    </div>
-    <div class="shop-card-body">
-      <div class="shop-card-meta">
-        <span>${product.weight}</span>
-        <span>${product.unitPrice}</span>
+    <a class="shop-card-link" href="product.html?slug=${slug}" aria-label="${product.name}">
+      <div class="shop-card-media">
+        <span>${product.category}</span>
       </div>
-      <h2>${product.name}</h2>
-      <p>${product.description}</p>
-      <div class="shop-card-footer">
-        <strong>${product.price}</strong>
-        <a href="${productOrderLink(product)}">Sepete ekle</a>
+      <div class="shop-card-body">
+        <div class="shop-card-meta">
+          <span>${product.weight}</span>
+          <span>${product.unitPrice}</span>
+        </div>
+        <h2>${product.name}</h2>
+        <p>${product.description}</p>
+        <div class="shop-card-footer">
+          <strong>${product.price}</strong>
+          <span>Detay</span>
+        </div>
       </div>
-    </div>
+    </a>
   `;
   return article;
 }
