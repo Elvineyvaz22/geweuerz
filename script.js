@@ -33,12 +33,13 @@ const chatMessages = document.getElementById('aiChatMessages');
 
 function syncChatViewport() {
   if (!window.visualViewport) {
-    document.documentElement.style.setProperty('--chat-keyboard-offset', '0px');
+    document.documentElement.style.setProperty('--chat-vh', '100dvh');
+    document.documentElement.style.setProperty('--chat-top', '0px');
     return;
   }
 
-  const keyboardOffset = Math.max(0, window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop);
-  document.documentElement.style.setProperty('--chat-keyboard-offset', `${keyboardOffset}px`);
+  document.documentElement.style.setProperty('--chat-vh', `${window.visualViewport.height}px`);
+  document.documentElement.style.setProperty('--chat-top', `${window.visualViewport.offsetTop}px`);
 }
 
 function setChatOpen(isOpen) {
@@ -48,8 +49,10 @@ function setChatOpen(isOpen) {
   document.body.classList.toggle('chat-lock', isOpen && isMobileChat);
   syncChatViewport();
 
-  if (isOpen && !isMobileChat) {
-    window.setTimeout(() => chatInput.focus(), 120);
+  if (isOpen) {
+    chatInput.focus({ preventScroll: true });
+  } else {
+    chatInput.blur();
   }
 }
 
