@@ -129,6 +129,32 @@
     </section>
   </main>
 
+  <div class="ai-chat" id="aiChat">
+    <button class="ai-chat-toggle" id="aiChatToggle" type="button" aria-label="Open chat">
+      <span class="ai-chat-toggle-icon">?</span>
+      <span class="ai-chat-toggle-text">Chat</span>
+    </button>
+
+    <section class="ai-chat-window" id="aiChatWindow" aria-label="AI customer chat">
+      <div class="ai-chat-header">
+        <div>
+          <strong data-tr="Gewurz Asistani" data-de="Gewurz Assistent">Gewurz Asistani</strong>
+          <span data-tr="Baharatlar haqqinda sorusun" data-de="Fragen Sie nach Gewurzen">Baharatlar haqqinda sorusun</span>
+        </div>
+        <button class="ai-chat-close" id="aiChatClose" type="button" aria-label="Close chat">x</button>
+      </div>
+
+      <div class="ai-chat-messages" id="aiChatMessages" aria-live="polite">
+        <div class="ai-chat-message bot" data-tr="Salam! Hansi yemek veya baharat haqqinda melumat almaq isteyirsiniz?" data-de="Hallo! Zu welchem Gericht oder Gewurz mochten Sie Informationen?">Salam! Hansi yemek veya baharat haqqinda melumat almaq isteyirsiniz?</div>
+      </div>
+
+      <form class="ai-chat-form" id="aiChatForm">
+        <input id="aiChatInput" type="text" autocomplete="off" data-placeholder-tr="Mesajinizi yazin..." data-placeholder-de="Nachricht schreiben..." placeholder="Mesajinizi yazin..." />
+        <button type="submit" data-tr="Gonder" data-de="Senden">Gonder</button>
+      </form>
+    </section>
+  </div>
+
   <footer class="footer">
     <p>© <span id="year"></span> Gewürz Kreationen Bonn</p>
     <p data-tr="Doğal lezzetler, özel baharatlar." data-de="Natürliche Aromen, besondere Gewürze.">Doğal lezzetler, özel baharatlar.</p>
