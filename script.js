@@ -75,8 +75,11 @@ function setChatLoading(isLoading) {
 }
 
 function resizeChatInput() {
+  const minHeight = window.matchMedia('(max-width: 520px)').matches ? 50 : 48;
+  const maxHeight = window.matchMedia('(max-width: 520px)').matches ? 112 : 120;
+
   chatInput.style.height = 'auto';
-  chatInput.style.height = `${Math.min(chatInput.scrollHeight, 118)}px`;
+  chatInput.style.height = `${Math.max(minHeight, Math.min(chatInput.scrollHeight, maxHeight))}px`;
 }
 
 chatToggle?.addEventListener('click', () => {
