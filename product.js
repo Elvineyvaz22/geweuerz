@@ -89,6 +89,12 @@ async function initProductPage() {
       return;
     }
 
+    window.CURRENT_PRODUCT = {
+      slug: productSlug(product.name),
+      name: product.name,
+      category: product.category,
+    };
+
     renderProduct(product, products);
   } catch (error) {
     productDetail.innerHTML = '<p class="shop-empty">Mehsul melumati yuklene bilmedi.</p>';

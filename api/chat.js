@@ -26,13 +26,18 @@ async function getProductCatalog() {
   return cachedCatalog;
 }
 
+async function getProducts() {
+  const file = await readFile(join(process.cwd(), 'products.json'), 'utf8');
+  return JSON.parse(file);
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    const { message, language = 'tr' } = req.body || {};
+    const { message, language = 'tr', currentProduct = null } = req.body || {};
 
     if (!message || typeof message !== 'string') {
       return res.status(400).json({ error: 'Message is required' });
@@ -42,7 +47,14 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'OPENAI_API_KEY is not configured on Vercel.' });
     }
 
-    const productCatalog = await getProductCatalog();
+    const [productCatalog, products] = await Promise.all([getProductCatalog(), getProducts()]);
+    const viewedProduct = currentProduct?.slug
+      ? products.find((product) => productSlug(product.name) === currentProduct.slug)
+      : null;
+    const viewedProductContext = viewedProduct
+      ? `The customer is currently viewing this product page: ${viewedProduct.name} | ${viewedProduct.category} | ${viewedProduct.weight} | ${viewedProduct.price} | ${viewedProduct.description}`
+      : 'The customer is not currently on a specific product page.';
+
     const systemPrompt = `
 You are the friendly AI sales assistant for Gewurz Kreationen Bonn, a spice and seasoning brand in Bonn, Germany.
 Answer customers in Turkish if they write Turkish, German if they write German, Azerbaijani if they write Azerbaijani, otherwise answer in the detected language.
@@ -53,6 +65,9 @@ Do not invent products, exact prices, stock levels, delivery dates, certificates
 If the customer asks for a recommendation, suggest 2-4 relevant products and briefly explain why.
 If the customer wants to buy, order, ask about delivery, wholesale, partnership or exact stock, guide them to contact the business by email: info@gewuerzkreationen-bonn.de or visit the shop page: https://geweuerz.vercel.app/shop.html.
 If asked about health or allergies, advise checking ingredients and contacting the business directly.
+
+Current page context:
+${viewedProductContext}
 
 Product catalog:
 ${productCatalog}

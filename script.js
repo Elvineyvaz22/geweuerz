@@ -122,7 +122,7 @@ chatForm?.addEventListener('submit', async (event) => {
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message, language }),
+      body: JSON.stringify({ message, language, currentProduct: window.CURRENT_PRODUCT || null }),
     });
 
     const data = await response.json();
