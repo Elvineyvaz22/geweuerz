@@ -73,7 +73,7 @@ Product catalog:
 ${productCatalog}
 `;
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://api.openai.com/v1/responses', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -81,11 +81,12 @@ ${productCatalog}
       },
       body: JSON.stringify({
         model: 'gpt-5-mini',
-        messages: [
+        input: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: message },
         ],
-        max_completion_tokens: 420,
+        reasoning: { effort: 'minimal' },
+        max_output_tokens: 700,
       }),
     });
 
@@ -95,7 +96,13 @@ ${productCatalog}
     }
 
     const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content || 'Uzgunum, su anda cevap veremedim.';
+    const reply = data.output_text
+      || data.output
+        ?.flatMap((item) => item.content || [])
+        ?.map((content) => content.text || '')
+        ?.join('')
+        ?.trim()
+      || 'Uzgunum, su anda cevap veremedim.';
 
     return res.status(200).json({ reply });
   } catch (error) {
