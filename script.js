@@ -31,6 +31,28 @@ const chatForm = document.getElementById('aiChatForm');
 const chatInput = document.getElementById('aiChatInput');
 const chatMessages = document.getElementById('aiChatMessages');
 
+function syncChatViewport() {
+  if (!window.visualViewport) {
+    document.documentElement.style.setProperty('--chat-keyboard-offset', '0px');
+    return;
+  }
+
+  const keyboardOffset = Math.max(0, window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop);
+  document.documentElement.style.setProperty('--chat-keyboard-offset', `${keyboardOffset}px`);
+}
+
+function setChatOpen(isOpen) {
+  const isMobileChat = window.matchMedia('(max-width: 520px)').matches;
+
+  chat.classList.toggle('open', isOpen);
+  document.body.classList.toggle('chat-lock', isOpen && isMobileChat);
+  syncChatViewport();
+
+  if (isOpen && !isMobileChat) {
+    window.setTimeout(() => chatInput.focus(), 120);
+  }
+}
+
 function getCurrentLanguage() {
   return localStorage.getItem('siteLang') || document.documentElement.lang || 'tr';
 }
@@ -50,14 +72,19 @@ function setChatLoading(isLoading) {
 }
 
 chatToggle?.addEventListener('click', () => {
-  chat.classList.toggle('open');
-  if (chat.classList.contains('open')) {
-    chatInput.focus();
-  }
+  setChatOpen(!chat.classList.contains('open'));
 });
 
 chatClose?.addEventListener('click', () => {
-  chat.classList.remove('open');
+  setChatOpen(false);
+});
+
+window.visualViewport?.addEventListener('resize', syncChatViewport);
+window.visualViewport?.addEventListener('scroll', syncChatViewport);
+window.addEventListener('resize', () => {
+  if (chat.classList.contains('open')) {
+    setChatOpen(true);
+  }
 });
 
 chatForm?.addEventListener('submit', async (event) => {
