@@ -6,5 +6,8 @@ venv/
 *.pyo
 *.xlsx
 *.xls
+sample_data/discovered_*.csv
+sample_data/scored_*.csv
+sample_data/collabstr_*.csv
 *.log
 .DS_Store

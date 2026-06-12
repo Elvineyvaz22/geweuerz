@@ -42,7 +42,14 @@ COUNTRY_ALIASES = {
     "us": "United States",
     "united states": "United States",
     "uae": "United Arab Emirates",
+    "ae": "United Arab Emirates",
     "united arab emirates": "United Arab Emirates",
+    "fr": "France",
+    "pl": "Poland",
+    "it": "Italy",
+    "es": "Spain",
+    "nl": "Netherlands",
+    "de": "Germany",
 }
 
 

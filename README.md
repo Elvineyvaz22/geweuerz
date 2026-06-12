@@ -1,8 +1,8 @@
 # EyDost eSIM Influencer Scoring Tool
 
-This tool analyzes influencer CSV exports and scores travel/eSIM partnership candidates for EyDost eSIM.
+This tool discovers, imports, analyzes and scores travel/eSIM partnership candidates for EyDost eSIM.
 
-It does not search the internet. The first version works with CSV exports from tools such as Wednesday, Modash, Heepsy, TikTok, Instagram, YouTube, or manual research lists.
+It can work with CSV exports from tools such as Wednesday, Modash, Heepsy, TikTok, Instagram, YouTube, manual research lists, web-search leads, and saved Collabstr listing HTML files.
 
 ## Install
 
@@ -24,6 +24,18 @@ More targeted discovery:
 
 ```bash
 python src/main.py discover --output discovered_turkey_travel.csv --country Turkey --platform instagram --platform tiktok --keyword "turkey travel" --keyword "airport tips"
+```
+
+Use broader multi-source discovery:
+
+```bash
+python src/main.py discover --output leads.csv --source all --relaxed --country Germany --country Turkey --platform instagram --platform tiktok --platform youtube --keyword "travel blogger" --keyword "digital nomad" --keyword "airport tips"
+```
+
+Import a saved Collabstr listing page:
+
+```bash
+python src/main.py import-collabstr --input "Find Travel Influencers _ Collabstr.html" --output collabstr_travel.csv
 ```
 
 Score a CSV and export Excel:
@@ -54,6 +66,16 @@ The `discover` command searches public web results and extracts likely social pr
 
 It uses search queries built from travel/eSIM keywords, countries and platform domains, then writes a CSV compatible with the `filter` command.
 
+Discovery sources:
+
+- `--source duckduckgo`
+- `--source bing`
+- `--source all`
+
+By default, discovery uses relaxed query variants. Use `--strict` for narrower `site:domain` searches.
+
+The script also tries to extract follower count and email from search snippets when visible.
+
 Important limitations:
 
 - It does not scrape private Instagram/TikTok data.
@@ -67,6 +89,15 @@ Example pipeline:
 python src/main.py discover --output leads.csv --country Germany --country Turkey --platform instagram --platform tiktok
 python src/main.py filter --input leads.csv --output scored_leads.xlsx
 ```
+
+Collabstr pipeline:
+
+```bash
+python src/main.py import-collabstr --input "Find Travel Influencers _ Collabstr.html" --output collabstr_travel.csv
+python src/main.py filter --input collabstr_travel.csv --output collabstr_travel_scored.xlsx
+```
+
+Collabstr pages often do not expose engagement rate, average views, or direct email in the listing card. In that case the imported file is useful as a lead list, but the score will improve only after those fields are enriched manually or from a paid export.
 
 ## CSV Columns
 
