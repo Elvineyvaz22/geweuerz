@@ -14,6 +14,18 @@ pip install -r requirements.txt
 
 ## Usage
 
+Discover public social profile leads from web search:
+
+```bash
+python src/main.py discover --output discovered_influencers.csv
+```
+
+More targeted discovery:
+
+```bash
+python src/main.py discover --output discovered_turkey_travel.csv --country Turkey --platform instagram --platform tiktok --keyword "turkey travel" --keyword "airport tips"
+```
+
 Score a CSV and export Excel:
 
 ```bash
@@ -30,6 +42,30 @@ Run tests:
 
 ```bash
 pytest
+```
+
+## Discovery Mode
+
+The `discover` command searches public web results and extracts likely social profile URLs for:
+
+- Instagram
+- TikTok
+- YouTube
+
+It uses search queries built from travel/eSIM keywords, countries and platform domains, then writes a CSV compatible with the `filter` command.
+
+Important limitations:
+
+- It does not scrape private Instagram/TikTok data.
+- It cannot reliably fetch follower count or engagement from social platforms in this first version.
+- The output should be treated as a lead list. Enrich followers, engagement, email and avg views from Modash, Heepsy, TikTok/Instagram exports, or manual review, then run `filter`.
+- Use reasonable query limits and delays to avoid aggressive search traffic.
+
+Example pipeline:
+
+```bash
+python src/main.py discover --output leads.csv --country Germany --country Turkey --platform instagram --platform tiktok
+python src/main.py filter --input leads.csv --output scored_leads.xlsx
 ```
 
 ## CSV Columns
@@ -154,4 +190,3 @@ Suggested offer:
 - EyDost adds ad budget to the creator's content, for example `$100-$150`.
 - Creator can also receive commission, bonus, or recurring partnership terms.
 - Start with A and B grade creators, then test selected C grade creators with small budgets.
-

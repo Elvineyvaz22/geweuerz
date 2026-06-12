@@ -4,6 +4,7 @@ import sys
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
 
 from cleaning import parse_engagement_rate, parse_followers
+from discovery import detect_platform, extract_username, is_profile_url
 from scoring import calculate_grade, score_niche
 
 
@@ -40,3 +41,12 @@ def test_final_grade_calculation() -> None:
     assert calculate_grade(45).startswith("C")
     assert calculate_grade(44).startswith("D")
 
+
+def test_detect_platform_and_username() -> None:
+    url = "https://www.instagram.com/travelcreator/"
+    assert detect_platform(url) == "instagram"
+    assert extract_username(url, "instagram") == "travelcreator"
+
+
+def test_reject_post_url() -> None:
+    assert not is_profile_url("https://www.instagram.com/p/abc123", "instagram")
